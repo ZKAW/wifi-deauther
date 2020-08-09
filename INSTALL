@@ -1,0 +1,44 @@
+#!/usr/bin/env python3
+import os
+import time
+import shutil
+
+
+dir_path = os.getcwd()
+script_path = dir_path + "/bin/w-killer"
+
+def apt_install(package):
+    print(f" \nInstalling {package}...\n")
+    os.system('sudo apt -y install '+package)
+    os.system('clear')
+def pip_install(package):
+    print(f" \nInstalling {package}...\n")
+    os.system('pip3 install '+package)
+    os.system('clear')
+
+
+os.system('clear')
+try:
+    input("\n  Welcome to W-Killer installation.\n"\
+          "   -> Press ENTER to install the required packages for W-Killer.\n"\
+          "   -> Press CTRL+C to abort.\n")
+except KeyboardInterrupt:
+    os.system('clear')
+    print('Installation canceled, goodbye.')
+    exit()
+os.system('clear')
+
+apt_install("aircrack-ng")
+apt_install("mdk4")
+
+pip_install('scapy')
+
+
+addPath = input('\n  Add W-Killer to /usr/local/bin\n  so you can access it from "w-killer" cmd line ? (Y/n): ')
+os.system('clear')
+if 'n' in addPath.lower():
+    print('\n -> W-Killer has not been added to /usr/local/bin')
+else:
+    shutil.copy2(script_path, '/usr/local/bin/w-killer')
+    print('\n -> Added w-killer to /usr/local/bin, you can now run the script by typing "w-killer"\n    after restarting your terminal')
+print('\nGoodbye.')
