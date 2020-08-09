@@ -5,7 +5,8 @@ import shutil
 
 
 dir_path = os.getcwd()
-script_path = dir_path + "/bin/w-killer"
+script_path = dir_path + "/W-Killer.py"
+bin_path = dir_path + "/bin/w-killer"
 
 def apt_install(package):
     print(f" \nInstalling {package}...\n")
@@ -33,12 +34,16 @@ apt_install("mdk4")
 
 pip_install('scapy')
 
+print("Fixing permissions...\n")
+os.system(f"chmod +x {script_path}")
+os.system(f"chmod +x {bin_path}")
+os.system('clear')
 
 addPath = input('\n  Add W-Killer to /usr/local/bin\n  so you can access it from "w-killer" cmd line ? (Y/n): ')
 os.system('clear')
 if 'n' in addPath.lower():
     print('\n -> W-Killer has not been added to /usr/local/bin')
 else:
-    shutil.copy2(script_path, '/usr/local/bin/w-killer')
+    shutil.copy2(bin_path, '/usr/local/bin/w-killer')
     print('\n -> Added w-killer to /usr/local/bin, you can now run the script by typing "w-killer"\n    after restarting your terminal')
 print('\nGoodbye.')
