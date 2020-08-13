@@ -60,7 +60,7 @@ def welcomeMsg():
                                                            
                                                         {3}╔╗ ┬ ┬  ╔═╗╦╔═╔═╗╦ ╦
                                                  {0}───    {4}╠╩╗└┬┘  ╔═╝╠╩╗╠═╣║║║
-    {0}-> {3}v1{0}.{4}0{0}                                             {3}╚═╝ ┴   ╚═╝╩ ╩╩ ╩╚╩╝
+    {0}-> {3}v1{0}.{4}1{0}                                             {3}╚═╝ ┴   ╚═╝╩ ╩╩ ╩╚╩╝
                                       {2}The possible is already done,
                                                {1}working on the impossible.'''.format(LIGHTGRAY, BLUE, CYAN, ORANGE, LIGHTORANGE))
 
