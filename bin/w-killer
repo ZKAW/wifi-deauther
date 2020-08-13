@@ -34,12 +34,16 @@ GRAY = '\033[30m'
 
 banned_interfaces = ['eth','eth0','eth1','eth2','lo','lo0','lo1','lo2']
 
-file_path = os.path.realpath(__file__)
-dir_path = os.path.dirname(file_path)
+home = os.path.expanduser('~')
+scanned_path = home+'/w-killer/scanned'
 DN = open(os.devnull, 'w')
 commands = []
 
-os.chdir(dir_path)
+if not os.path.exists(scanned_path):
+    os.makedirs(scanned_path)
+
+
+os.chdir(scanned_path)
 os.system('clear')
 
 
@@ -161,19 +165,19 @@ def selectInterface():
 
 def scanAP(monitor_interface):
     cmd = ['airodump-ng',monitor_interface,'-w','scanned','--output-format','csv']
-    for i in os.listdir(dir_path):
+    for i in os.listdir(scanned_path):
         if 'scanned' in i:
             os.remove(i)
     proc_read = Popen(cmd, stdout=DN, stderr=DN)
 
-    while os.path.exists(dir_path+"/scanned-01.csv") == False:
+    while os.path.exists(scanned_path+"/scanned-01.csv") == False:
         continue
     
     attempts_count = 0
     while True:
         try:
             os.system('clear')
-            with open(dir_path+'/scanned-01.csv') as csv_file:
+            with open(scanned_path+'/scanned-01.csv') as csv_file:
                 csv_reader = csv.reader(csv_file, delimiter=',')
                 hit_clients = False
                 ssid = None
