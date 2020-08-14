@@ -90,6 +90,8 @@ def quitGracefully(clear=True):
         pass
     except:
         print(f'\n{LIGHTGRAY}Thank you for using {CYAN}W{LIGHTGRAY}-{LIGHTBLUE}Killer{LIGHTGRAY}.')
+    print(f"{LIGHTGRAY}Don't forget to {GREEN}like {LIGHTGRAY}the repos on {CYAN}github {LIGHTGRAY}! :)")
+    print(f"{LIGHTBLUE}* {GREEN}https://github.com/ZKAW/wifi-deauther")
     print(f'{LIGHTORANGE}Goodbye{LIGHTGRAY}.')
     exit(0)
 
