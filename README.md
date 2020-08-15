@@ -1,5 +1,5 @@
 # wifi-deauther
-## fully automatic wifi deauther (killer) coded in Python
+fully automatic wifi deauther (killer) coded in Python
 
 -> HOW TO INSTALL
 
