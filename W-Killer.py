@@ -17,7 +17,7 @@ BLACK = '\033[30m'
 RED = '\033[31m'
 GREEN = '\033[32m'
 ORANGE = '\033[93m'
-BLUE = '\033[34m' 
+BLUE = '\033[34m'
 MAGENTA = '\033[95m'
 CYAN = '\033[36m'
 
@@ -60,7 +60,7 @@ def welcomeMsg():
                                                            
                                                         {3}╔╗ ┬ ┬  ╔═╗╦╔═╔═╗╦ ╦
                                                  {0}───    {4}╠╩╗└┬┘  ╔═╝╠╩╗╠═╣║║║
-    {0}-> {3}v1{0}.{4}2{0}                                             {3}╚═╝ ┴   ╚═╝╩ ╩╩ ╩╚╩╝
+    {0}-> {3}v1{0}.{4}3{0}                                             {3}╚═╝ ┴   ╚═╝╩ ╩╩ ╩╚╩╝
                                       {2}The possible is already done,
                                                {1}working on the impossible.'''.format(LIGHTGRAY, BLUE, CYAN, ORANGE, LIGHTORANGE))
 
