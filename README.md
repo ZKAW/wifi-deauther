@@ -24,4 +24,4 @@ That's it !
 
 **MORE**
 
-- Please note that this script is designed for Linux based operating systems. Using this script in another operating system may cause errors.
+- Please note that this script is designed for **Linux** based operating systems. Using this script in another operating system may cause errors.
