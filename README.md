@@ -19,17 +19,17 @@ chmod +x INSTALL
 **HOW TO USE**
 
 ``` bash
-$ python3 W-Killer.py 
+python3 W-Killer.py 
 ```
 or (if you added the script to path):
 ``` bash
-$ w-killer
+w-killer
 ```
-$ Select your wireless interface
+Select your wireless interface
 ``` bash
-$ Select the AP to deauth
+Select the AP to deauth
 ```
-$ That's it !
+That's it !
 
 **MORE**
 
