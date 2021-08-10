@@ -6,17 +6,29 @@
 ``` bash
 git clone https://github.com/ZKAW/wifi-killer
 ```
-$ cd wifi-killer
-$ chmod +x INSTALL
-$ ./INSTALL
+``` bash
+cd wifi-killer
+```
+``` bash
+chmod +x INSTALL
+```
+``` bash
+./INSTALL
+```
 
 **HOW TO USE**
 
+``` bash
 $ python3 W-Killer.py 
+```
 or (if you added the script to path):
+``` bash
 $ w-killer
+```
 $ Select your wireless interface
+``` bash
 $ Select the AP to deauth
+```
 $ That's it !
 
 **MORE**
