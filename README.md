@@ -3,7 +3,7 @@
 
 **HOW TO INSTALL**
 
-bash ```
+``` bash
 git clone https://github.com/ZKAW/wifi-killer
 ```
 $ cd wifi-killer
