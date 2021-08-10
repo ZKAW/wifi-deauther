@@ -3,7 +3,9 @@
 
 **HOW TO INSTALL**
 
-bash`git clone https://github.com/ZKAW/wifi-killer`
+bash ```
+git clone https://github.com/ZKAW/wifi-killer
+```
 $ cd wifi-killer
 $ chmod +x INSTALL
 $ ./INSTALL
