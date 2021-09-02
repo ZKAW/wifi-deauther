@@ -97,7 +97,7 @@ def quitGracefully(clear=True):
 
 
 def selectInterface():
-    #os.system('airmon-ng check kill') # enable if not working properly
+    os.system('airmon-ng check kill') # enable if not working properly
     while True:
         try:
             os.system('clear')
