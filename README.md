@@ -4,18 +4,18 @@
 **HOW TO INSTALL**
 
 ``` bash
-git clone https://github.com/ZKAW/wifi-killer && cd wifi-killer && chmod +x INSTALL && ./INSTALL
+git clone https://github.com/ZKAW/wifi-killer && cd wifi-killer && chmod +x INSTALL && sudo ./INSTALL
 ```
 
 **HOW TO USE**
 
 * Execute the program with:
 ``` bash
-python3 W-Killer.py 
+sudo python3 W-Killer.py 
 ```
 or (if you added the script to path):
 ``` bash
-w-killer
+sudo w-killer
 ```
 * Select your wireless interface
 * Select the AP to deauth
