@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 import os
-import time
 import shutil
+import subprocess
 
 # Terminal colors set
 DEFAULT = '\033[39m'
@@ -37,6 +37,8 @@ def pip_install(package):
     os.system('pip3 install '+package)
     os.system('clear')
 
+def is_root():
+    return os.geteuid() == 0
 
 os.system('clear')
 try:
@@ -47,10 +49,15 @@ try:
           f"   {CYAN}-> {LIGHTGRAY}Press {ORANGE}CTRL{LIGHTGRAY}+{ORANGE}C {LIGHTGRAY}to {ORANGE}abort{LIGHTGRAY}.")
 except KeyboardInterrupt:
     os.system('clear')
-    print(f'{LIGHTORANGE}* {LIGHTGRAY}Installation {ORANGE}canceled{LIGHTGRAY}.')
+    print(f'{LIGHTORANGE}* {LIGHTGRAY}Installation {ORANGE}canceled by user.{LIGHTGRAY}.')
     print(f'\n{LIGHTORANGE}Goodbye{LIGHTGRAY}.')
     exit()
 os.system('clear')
+
+if not is_root():
+    print(f'{LIGHTORANGE}* {LIGHTGRAY}This script must be run as {RED}root{LIGHTGRAY}.')
+    print(f'{LIGHTORANGE}* {LIGHTGRAY}Please, try again using {ORANGE}sudo{LIGHTGRAY}.')
+    exit()
 
 apt_install("aircrack-ng")
 apt_install("mdk4")
