@@ -26,3 +26,4 @@ That's it !
 
 - This script is designed for **Linux** based operating systems. Using this script in another operating system may cause errors.
 - The use of two wireless cards is **highly recommended** to avoid errors and complications.
+- Your wireless card must have **monitor mode** available and enabled.
