@@ -41,6 +41,12 @@ def is_root():
     return os.geteuid() == 0
 
 os.system('clear')
+
+if not is_root():
+    print(f"\n{RED}* {LIGHTGRAY}This script must be run as {ORANGE}root{LIGHTGRAY}")
+    print(f"{RED}* {LIGHTGRAY}Please try again with {ORANGE}sudo{LIGHTGRAY}")
+    exit()
+
 try:
     print(f"{LIGHTORANGE}Welcome")
     print(f"      {ORANGE}To")
@@ -54,10 +60,6 @@ except KeyboardInterrupt:
     exit()
 os.system('clear')
 
-if not is_root():
-    print(f'{LIGHTORANGE}* {LIGHTGRAY}This script must be run as {RED}root{LIGHTGRAY}.')
-    print(f'{LIGHTORANGE}* {LIGHTGRAY}Please, try again using {ORANGE}sudo{LIGHTGRAY}.')
-    exit()
 
 apt_install("aircrack-ng")
 apt_install("mdk4")
