@@ -3,13 +3,8 @@ from subprocess import Popen, PIPE, STDOUT
 from scapy.all import (Dot11,RadioTap,Dot11Deauth,sendp,send)
 
 import os
-import re
-import sys
 import csv
 import time
-import signal
-import subprocess
-import cmd
 
 # Terminal colors set
 DEFAULT = '\033[39m'
@@ -64,6 +59,8 @@ def welcomeMsg():
                                       {2}The possible is already done,
                                                {1}working on the impossible.'''.format(LIGHTGRAY, BLUE, CYAN, ORANGE, LIGHTORANGE))
 
+def is_root():
+    return os.geteuid() == 0
 
 def quitGracefully(clear=True):
     try:
@@ -315,6 +312,10 @@ def deauthAll():
 
 
 try:
+    if not is_root():
+        print(f"\n{RED}* {LIGHTGRAY}This script must be run as {ORANGE}root{LIGHTGRAY}")
+        print(f"{RED}* {LIGHTGRAY}Please try again with {ORANGE}sudo{LIGHTGRAY}")
+        quitGracefully(clear=False)
     monitor_interface = selectInterface()
     scanAP(monitor_interface)
 except Exception as e:
