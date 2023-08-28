@@ -79,5 +79,5 @@ if 'n' in addPath.lower():
 else:
     shutil.copy2(script_path, '/usr/local/bin/w-killer')
     print(f'\n {LIGHTGREEN}* {CYAN}W{LIGHTGRAY}-{LIGHTBLUE}Killer{LIGHTGRAY} has been added {LIGHTGRAY}to /usr/local/bin.\n'\
-          f'   You can now run the script by typing "{BLUE}w-killer{LIGHTGRAY}".')
+          f'   You can now run the script by typing "{BLUE}sudo w-killer{LIGHTGRAY}" in the terminal.')
 print(f'\n{LIGHTORANGE}Goodbye{LIGHTGRAY}.')
