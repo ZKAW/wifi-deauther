@@ -25,7 +25,6 @@ GRAY = '\033[30m'
 
 dir_path = os.getcwd()
 script_path = dir_path + "/W-Killer.py"
-bin_path = dir_path + "/bin/w-killer"
 
 def apt_install(package):
     print(f" \n{LIGHTORANGE}* {LIGHTGRAY}Installing {CYAN}{package}{LIGHTGRAY}...\n")
@@ -67,7 +66,6 @@ pip_install('scapy')
 
 print(f"{CYAN}* {GREEN}Fixing {LIGHTGRAY}permissions...\n")
 os.system(f"chmod +x {script_path}")
-os.system(f"chmod +x {bin_path}")
 os.system('clear')
 
 try:
@@ -79,7 +77,7 @@ os.system('clear')
 if 'n' in addPath.lower():
     print(f'\n {LIGHTORANGE}* {CYAN}W{LIGHTGRAY}-{LIGHTBLUE}Killer{LIGHTGRAY} has not {LIGHTGRAY}been added to /usr/local/bin')
 else:
-    shutil.copy2(bin_path, '/usr/local/bin/w-killer')
+    shutil.copy2(script_path, '/usr/local/bin/w-killer')
     print(f'\n {LIGHTGREEN}* {CYAN}W{LIGHTGRAY}-{LIGHTBLUE}Killer{LIGHTGRAY} has been added {LIGHTGRAY}to /usr/local/bin.\n'\
           f'   You can now run the script by typing "{BLUE}w-killer{LIGHTGRAY}".')
 print(f'\n{LIGHTORANGE}Goodbye{LIGHTGRAY}.')
