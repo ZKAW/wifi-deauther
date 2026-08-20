@@ -15,7 +15,7 @@ git clone https://github.com/ZKAW/wifi-deauther && cd wifi-deauther && chmod +x 
 
 * Execute the program with:
 ``` bash
-sudo python3 W-Killer.py 
+sudo python3 w-killer.py 
 ```
 or (if you added the script to path):
 ``` bash

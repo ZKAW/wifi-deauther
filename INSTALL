@@ -24,7 +24,7 @@ WHITE = '\033[97m'
 GRAY = '\033[30m'
 
 dir_path = os.getcwd()
-script_path = dir_path + "/W-Killer.py"
+script_path = dir_path + "/w-killer.py"
 
 def apt_install(package):
     print(f" \n{LIGHTORANGE}* {LIGHTGRAY}Installing {CYAN}{package}{LIGHTGRAY}...\n")
