@@ -1,6 +1,10 @@
 # wifi-deauther
 **> Fully automatic wifi deauther (killer) coded in Python**
 
+Built to understand 802.11 management frame injection and how deauthentication
+attacks work at the protocol level. Intended for testing on networks you own
+or have explicit permission to test.
+
 **HOW TO INSTALL**
 
 ``` bash
