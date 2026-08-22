@@ -100,7 +100,7 @@ def selectInterface():
             interface_list = []
             count = -1
             for i in os.listdir("/sys/class/net/"):
-                if not i.startswith('eth') and not i.startswith('lo'):
+                if not i.startswith('eth') and not i.startswith('lo') and i != 'bonding_masters':
                     count += 1
                     interface_list.append(i)
                     if i.find('mon') != -1:
@@ -112,7 +112,7 @@ def selectInterface():
             os.system('clear')
             print(f"\n  {CYAN}* {LIGHTGRAY}You selected {LIGHTORANGE}{interface}{LIGHTGRAY} for monitoring, waiting for monitor mode to enable...")
             for i in os.listdir("/sys/class/net/"):
-                if not i.startswith('eth') and not i.startswith('lo'):
+                if not i.startswith('eth') and not i.startswith('lo') and i != 'bonding_masters':
                     if i.find('mon') != -1:
                         if i.find(interface) != -1:
                             monitor_interface = i
@@ -129,7 +129,7 @@ def selectInterface():
                         continue
                     proc_dump.kill()
                     for i in os.listdir("/sys/class/net/"):
-                        if not i.startswith('eth') and not i.startswith('lo'):
+                        if not i.startswith('eth') and not i.startswith('lo') and i != 'bonding_masters':
                             if i.find('mon') != -1:
                                 if i.find(interface) != -1:
                                     monitor_interface = i
